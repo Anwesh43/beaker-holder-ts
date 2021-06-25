@@ -6,7 +6,7 @@ import {
 
 
 const delay : number = 20 
-const scGap : number = 0.02 
+const scGap : number = 0.01
 
 export const useAnimatedScale = () => {
     const [scale, setScale] = useState(0)
@@ -75,13 +75,14 @@ export const useStyle = (w : number, h : number, scale : number) => {
     const position = 'absolute'
     const background : string = "indigo"
     const sf : number = sinify(scale)
-    const sf1 : number = divideScale(sf, 0, 2)
-    const sf2 : number = divideScale(sf, 1, 2)
+    const sf1 : number = divideScale(sf, 0, 3)
+    const sf2 : number = divideScale(sf, 1, 3)
+    const lineWidth = Math.min(w,  h) / 90
     return {
         parentStyle() : CSSProperties {
             const left : string = `${w / 2}px`
             const top : string = `${h / 2}px`
-            const transform = `rotate(${180 * sf1}deg)`
+            const transform = `rotate(${-180 * sf1}deg)`
             return {
                 position, 
                 left, 
@@ -91,7 +92,7 @@ export const useStyle = (w : number, h : number, scale : number) => {
         },
         lineStyle() : CSSProperties {
             const left = `${-lSize}px`
-            const top = `${-Math.min(w, h) / 180}px`
+            const top = `${0}px`
             const width = `${lSize}px`
             const height = `${Math.min(w,  h) / 90}px` 
             return {
@@ -105,26 +106,31 @@ export const useStyle = (w : number, h : number, scale : number) => {
         },  
 
         containerStyle() : CSSProperties {
-            const left = `${-lSize}px`
-            const top = `${-size}px`
-            const borderTop = `${size}px solid ${background}`
-            const borderLeft = `${size}px solid ${background}`
-            const borderRight = `${size}px solid ${background}`
+            const left = `${-lSize - size}px`
+            const top = `${0}px`
+            const borderTop = `${lineWidth}px solid ${background}`
+            const borderLeft = `${lineWidth}px solid ${background}`
+            const borderRight = `${lineWidth}px solid ${background}`
             const borderBottom = `none`
+            const width = `${size}px`
+            const height = `${size}px`
             return {
+                position, 
                 left, 
                 top, 
                 borderTop, 
                 borderLeft, 
                 borderRight,
-                borderBottom
+                borderBottom,
+                width, 
+                height 
             }
         },
 
         ballStyle() : CSSProperties {
             const borderRadius = '50%'
             const left = `${w / 2 + lSize}px`
-            const top = `${(h / 2) * (1 - sf2)}px`
+            const top = `${(h / 2 - size) *sf2}px`
             const width = `${size}px`
             const height = `${size}px`
             return {
@@ -133,7 +139,8 @@ export const useStyle = (w : number, h : number, scale : number) => {
                 top, 
                 width, 
                 height, 
-                borderRadius
+                borderRadius,
+                background
             }
         }
 
