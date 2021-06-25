@@ -69,7 +69,7 @@ const sinify = (
     ) : number => Math.sin(scale * Math.PI)
 
 
-const useStyle = (w : number, h : number, scale : number) => {
+export const useStyle = (w : number, h : number, scale : number) => {
     const size : number = Math.min(w, h) / 10
     const lSize : number = Math.min(w, h) / 3
     const position = 'absolute'
@@ -78,7 +78,7 @@ const useStyle = (w : number, h : number, scale : number) => {
     const sf1 : number = divideScale(sf, 0, 2)
     const sf2 : number = divideScale(sf, 1, 2)
     return {
-        parentStyle() {
+        parentStyle() : CSSProperties {
             const left : string = `${w / 2}px`
             const top : string = `${h / 2}px`
             const transform = `rotate(${180 * sf1}deg)`
@@ -89,7 +89,7 @@ const useStyle = (w : number, h : number, scale : number) => {
                 transform 
             }
         },
-        lineStyle() {
+        lineStyle() : CSSProperties {
             const left = `${-lSize}px`
             const top = `${-Math.min(w, h) / 180}px`
             const width = `${lSize}px`
@@ -123,8 +123,8 @@ const useStyle = (w : number, h : number, scale : number) => {
 
         ballStyle() : CSSProperties {
             const borderRadius = '50%'
-            const left = `${lSize}px`
-            const top = `${-(h / 2) * (1 - sf2)}px`
+            const left = `${w / 2 + lSize}px`
+            const top = `${(h / 2) * (1 - sf2)}px`
             const width = `${size}px`
             const height = `${size}px`
             return {
