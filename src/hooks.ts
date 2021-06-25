@@ -40,7 +40,7 @@ export const useDimension = () => {
         }
         return () => {
             window.onresize = () => {
-                
+
             }
         }
     })
@@ -49,3 +49,20 @@ export const useDimension = () => {
         h
     }
 }
+
+const maxScale = (
+    scale : number,
+    i : number,
+    n : number
+) : number => Math.max(0, scale - i / n)
+
+
+const divideScale = (
+    scale : number,
+    i : number,
+    n : number
+) : number => Math.min(1 / n, maxScale(scale, i, n)) * n 
+
+const sinify = (
+    scale : number
+    ) : number => Math.sin(scale * Math.PI)
